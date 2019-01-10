@@ -1,4 +1,0 @@
-config BR2_PACKAGE_RKSCRIPT
-	bool "rockchip script"
-	help
-	  rockchip script for linux use.

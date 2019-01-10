@@ -1,4 +1,4 @@
-# NanoPi Neo4 buildroot system
+# Raspberry Pi buildroot system
 
 # Initial setup
 
@@ -6,12 +6,7 @@ Clone buildroot. For example :
 
 ```
 cd yourPath
-git clone git://git.busybox.net/buildroot buildroot.neo4
-git checkout e1a43490e9ab24a3a249ab1224e236db47c53145
-
-# these are from rockchip - but I suggest you use the stock buildroot
-#git clone git@github.com:rockchip-linux/buildroot.git buildroot.rockchip
-#git checkout rockchip/stable-rk3399-v2.09-20181102
+git clone git://git.busybox.net/buildroot buildroot.raspberrypi
 ```
 
 Make sure you have requirements :
@@ -20,15 +15,15 @@ sudo apt-get install -y build-essential gcc g++ autoconf automake libtool bison 
 sudo apt-get install -y patch texinfo wget git gawk curl lzma bc quilt
 ```
 
-Clone the NanoPi.Neo4 external buildroot tree :
+Clone the RaspberryPi external buildroot tree :
 ```
-git clone git@github.com:flatmax/NanoPi.Neo4.buildroot.external.git NanoPi.Neo4
+git clone git@github.com:Audio-Injector/RaspberryPi.buildroot.external.git
 ```
 
 # To make the system
 
 ```
-. NanoPi.Neo4/setup.sh yourPath/buildroot.neo4
+. RaspberryPi.buildroot.external/setup.sh yourPath/buildroot.raspberrypi
 ```
 
 # ensure you have your buildroot net downloads directory setup
@@ -51,9 +46,10 @@ NOTE: The following command will overwrite any disk attached to /dev/sdg
 NOTE: Be super careful here!
 
 ```
-sudo ./output/images/sd-fuse-rk3399/fusing.sh /dev/sdg buildroot
+sudo dd if=output/images/sdcard.img of=/dev/sdg
+
 ```
 
 # using
 
-ssh in as user root, no pass. Or connect to the console debug uart with a serial cable.
+ssh root@host where host is the raspberrypi

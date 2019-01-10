@@ -1,66 +1,95 @@
 #! /bin/bash
 # Author : Matt Flax <flatmax@flatmax.org>
-# Date : Nov 2018
+# Date : Nov 2017
 
 if [ $# -lt 1 ]; then
   echo usage :
   me=`basename "$0"`
-  echo "     " $me path.to.buildroot.neo4
+  echo "     " $me path.to.buildroot.ies
   echo for example :
-  echo "     " $me /home/flatmax.unencrypted/buildroot.rockchip
+  echo "     " $me /home/flatmax.unencrypted/buildroot.ies
 else
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
   CUSTOM_PATH=$DIR
   BR_REPO_PATH=$1
-  BR_DEFCONFIG=neo4_defconfig
-  BR_CUSTOM_DEFCONFIG=neo4_custom_defconfig
 
-    if [ ! -d "$BR_REPO_PATH" ]; then
-    	echo Can\'t find the directory $BR_REPO_PATH please correct the bash script.
-    	return;
-    fi
-    if [ ! -d "$CUSTOM_PATH" ]; then
-    	echo Can\'t find the directory $CUSTOM_PATH please correct the bash script.
-    	return;
-    fi
+  # 64 bit
+  BR_STOCK_DEFCONFIG=$BR_REPO_PATH/configs/raspberrypi3_64_defconfig
+  BR_NEW_DEFCONFIG_FILE=raspberrypi3_64_ies_defconfig
+  BR_STOCK_POSTIMAGE=$BR_REPO_PATH/board/raspberrypi3-64/post-image.sh
+  BR_EXTRA_POSTIMAGE=$CUSTOM_PATH/board/raspberrypi3-64/post-image-extra.sh
+  BR_STOCK_GENIMAGE=$BR_REPO_PATH/board/raspberrypi3-64/genimage-raspberrypi3-64.cfg
 
-    if [ ! -e $CUSTOM_PATH/configs/$BR_CUSTOM_DEFCONFIG ]; then
-    	echo can\'t find the file $CUSTOM_PATH/configs/$BR_CUSTOM_DEFCONFIG
-    	echo please fix this script
-    	return;
-    fi
+  # 32 bit
+  BR_STOCK_DEFCONFIG=$BR_REPO_PATH/configs/raspberrypi3_defconfig
+  BR_NEW_DEFCONFIG_FILE=raspberrypi3_32_ies_defconfig
+  BR_STOCK_POSTIMAGE=$BR_REPO_PATH/board/raspberrypi3/post-image.sh
+  BR_EXTRA_POSTIMAGE=$CUSTOM_PATH/board/raspberrypi3/post-image-extra.sh
+  BR_STOCK_GENIMAGE=$BR_REPO_PATH/board/raspberrypi3/genimage-raspberrypi3.cfg
 
-    # remove libdrm so that we use the rockchip version
-    # if [ -d "$BR_REPO_PATH/package/libdrm" ]; then
-    #   pushd $BR_REPO_PATH/package
-    #   tar zcpf libdrm.tgz libdrm
-    #   sed -i '/libdrm/d' Config.in
-    #   popd
-    #   rm -rf $BR_REPO_PATH/package/libdrm
-    # fi
+  # common target genimage file
+  BR_NEW_DEFCONFIG=$CUSTOM_PATH/configs/$BR_NEW_DEFCONFIG_FILE
+  BR_EXTRA_DEFCONFIG=$CUSTOM_PATH/configs/raspberrypi3_ies_defconfig
+  BR_POSTIMAGE=$BR_REPO_PATH/output/build/post-image.sh
+  BR_GENIMAGE=$BR_REPO_PATH/output/build/genimage-pi.cfg
 
-    cd $1
+  mkdir -p $BR_REPO_PATH/output/build
 
-    # uncomment these to include them ...
-    cat $CUSTOM_PATH/configs/rockchip/rk3399_arm64.config > $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    cat $CUSTOM_PATH/configs/rockchip/base.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    cat $CUSTOM_PATH/configs/rockchip/base_extra.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    cat $CUSTOM_PATH/configs/rockchip/gpu.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    cat $CUSTOM_PATH/configs/rockchip/video_mpp.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    #cat $CUSTOM_PATH/configs/rockchip/video_gst.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/audio.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/camera.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/camera_gst.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/test.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/debug.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/benchmark.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/wifi.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/bt.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/qt.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
-    # cat $CUSTOM_PATH/configs/rockchip/qt_app.config >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
+  if [ ! -d "$BR_REPO_PATH" ]; then
+  	echo Can\'t find the directory $BR_REPO_PATH please correct the bash script.
+  	return;
+  fi
+  if [ ! -e "$BR_STOCK_DEFCONFIG" ]; then
+  	echo can\'t find the file $BR_STOCK_DEFCONFIG
+  	echo please fix this script
+  	return;
+  fi
+  if [ ! -e "$BR_STOCK_POSTIMAGE" ]; then
+  	echo can\'t find the file $BR_STOCK_POSTIMAGE
+  	echo please fix this script
+  	return;
+  fi
 
-    cat $CUSTOM_PATH/configs/$BR_CUSTOM_DEFCONFIG >> $CUSTOM_PATH/configs/$BR_DEFCONFIG
+  if [ ! -d "$CUSTOM_PATH" ]; then
+  	echo Can\'t find the directory $CUSTOM_PATH please correct the bash script.
+  	return;
+  fi
+  if [ ! -e $BR_EXTRA_DEFCONFIG ]; then
+  	echo can\'t find the file $BR_EXTRA_DEFCONFIG
+  	echo please fix this script
+  	return;
+  fi
+  if [ ! -e $BR_EXTRA_POSTIMAGE ]; then
+  	echo can\'t find the file $BR_EXTRA_POSTIMAGE
+  	echo please fix this script
+  	return;
+  fi
 
-    make BR2_EXTERNAL=$CUSTOM_PATH $BR_DEFCONFIG
+  # generate the buildroot config file
+  echo \#autogenerated do not edit, put changes in $BR_EXTRA_DEFCONFIG > $BR_NEW_DEFCONFIG
+  cat $BR_STOCK_DEFCONFIG >> $BR_NEW_DEFCONFIG
+  cat $BR_EXTRA_DEFCONFIG >> $BR_NEW_DEFCONFIG
+
+  # generate the post-image file
+  echo "#!/bin/bash
+#autogenerated do not edit, put changes in $BR_EXTRA_POSTIMAGE" > $BR_POSTIMAGE
+  echo "set -e
+mkdir -p \${BINARIES_DIR}/overlays
+" >> $BR_POSTIMAGE
+  cat $BR_STOCK_POSTIMAGE >> $BR_POSTIMAGE
+  sed -i 's/^genimage/genimage -h /;s/exit/#exit/' $BR_POSTIMAGE
+  cat $BR_EXTRA_POSTIMAGE >> $BR_POSTIMAGE
+  chmod u+x $BR_POSTIMAGE
+
+  # generate the genimage file
+  cat $BR_STOCK_GENIMAGE > $BR_GENIMAGE
+  sed -i '/rpi-firmware\/overlays/d' $BR_GENIMAGE   # remove rpi-firmware/overlays if present
+  sed -i 's/zImage"/Image",\
+      "overlays"/' $BR_GENIMAGE  # add the kernel's overlays
+       # sed -i '/"Image"/"Image",\
+       #      "overlays"/' $BR_GENIMAGE  # add the kernel's overlays
+
+  cd $1
+  make BR2_EXTERNAL=$CUSTOM_PATH $BR_NEW_DEFCONFIG_FILE
 fi

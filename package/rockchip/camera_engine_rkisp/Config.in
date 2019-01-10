@@ -1,4 +1,0 @@
-config BR2_PACKAGE_CAMERA_ENGINE_RKISP
-	bool "Rockchip Camera Engine for linux"
-	help
-	  Rockchip camera engine for linux.

@@ -1,4 +1,0 @@
-config BR2_PACKAGE_GLMARKTEST
-	bool "test script for glmark2"
-	help
-	  test script for glmark2.

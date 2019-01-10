@@ -1,4 +1,0 @@
-config BR2_PACKAGE_DUERCLIENTSDK
-	bool "duer client sdk"
-	help
-	  DuerOS client sdk

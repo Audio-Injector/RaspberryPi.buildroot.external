@@ -1,3 +1,0 @@
-config BR2_PACKAGE_MODESET
-	bool "modeset for Linux"
-	depends on BR2_PACKAGE_LIBDRM

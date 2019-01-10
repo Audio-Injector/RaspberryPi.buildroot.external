@@ -5,32 +5,30 @@
 if [ $# -lt 1 ]; then
   echo usage :
   me=`basename "$0"`
-  echo "     " $me path.to.buildroot.ies
-  echo for example :
-  echo "     " $me /home/flatmax.unencrypted/buildroot.ies
+  echo "     " $me path.to.buildroot.raspberrypi
 else
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
   CUSTOM_PATH=$DIR
   BR_REPO_PATH=$1
 
-  # 64 bit
+  # pi3 64 bit
   BR_STOCK_DEFCONFIG=$BR_REPO_PATH/configs/raspberrypi3_64_defconfig
-  BR_NEW_DEFCONFIG_FILE=raspberrypi3_64_ies_defconfig
+  BR_NEW_DEFCONFIG_FILE=raspberrypi3_64_ai_defconfig
   BR_STOCK_POSTIMAGE=$BR_REPO_PATH/board/raspberrypi3-64/post-image.sh
   BR_EXTRA_POSTIMAGE=$CUSTOM_PATH/board/raspberrypi3-64/post-image-extra.sh
   BR_STOCK_GENIMAGE=$BR_REPO_PATH/board/raspberrypi3-64/genimage-raspberrypi3-64.cfg
 
-  # 32 bit
+  # pi3 32 bit
   BR_STOCK_DEFCONFIG=$BR_REPO_PATH/configs/raspberrypi3_defconfig
-  BR_NEW_DEFCONFIG_FILE=raspberrypi3_32_ies_defconfig
+  BR_NEW_DEFCONFIG_FILE=raspberrypi3_32_ai_defconfig
   BR_STOCK_POSTIMAGE=$BR_REPO_PATH/board/raspberrypi3/post-image.sh
   BR_EXTRA_POSTIMAGE=$CUSTOM_PATH/board/raspberrypi3/post-image-extra.sh
   BR_STOCK_GENIMAGE=$BR_REPO_PATH/board/raspberrypi3/genimage-raspberrypi3.cfg
 
   # common target genimage file
   BR_NEW_DEFCONFIG=$CUSTOM_PATH/configs/$BR_NEW_DEFCONFIG_FILE
-  BR_EXTRA_DEFCONFIG=$CUSTOM_PATH/configs/raspberrypi3_ies_defconfig
+  BR_EXTRA_DEFCONFIG=$CUSTOM_PATH/configs/raspberrypi_ai_defconfig
   BR_POSTIMAGE=$BR_REPO_PATH/output/build/post-image.sh
   BR_GENIMAGE=$BR_REPO_PATH/output/build/genimage-pi.cfg
 

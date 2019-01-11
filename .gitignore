@@ -1,5 +1,6 @@
 *~
 .ssh
+raspberrypi0w_32_ai_defconfig
 raspberrypi3_32_ai_defconfig
 raspberrypi3_64_ai_defconfig
 #*#

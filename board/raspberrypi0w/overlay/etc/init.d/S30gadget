@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#[ -f /etc/sysctl.conf ] || exit 0
+
+case "$1" in
+    start)
+        echo "Loading gadget"
+        /root/startGadget.sh
+        ;;
+
+    stop)
+        echo "UnLoading gadget"
+#        /root/stopGadget.sh
+        ;;
+
+    *)
+        echo "Usage: $0 start"
+        exit 1
+        ;;
+esac
+
+exit $?

@@ -29,7 +29,7 @@ echo "Ethernet/audio" > strings/0x409/product
 # configure the ethernet
 CDIR1=configs/c.1
 mkdir $CDIR1
-echo 100 > $CDIR1/MaxPower
+echo 250 > $CDIR1/MaxPower
 mkdir $CDIR1/strings/0x409
 echo "RNDIS" > $CDIR1/strings/0x409/configuration
 
@@ -47,9 +47,9 @@ ln -s functions/rndis.usb0 $CDIR1
 
 # configure the audio
 ADIR1=configs/c.1
-mkdir $ADIR1
-echo 100 > $ADIR1/MaxPower
-mkdir $ADIR1/strings/0x409
+#mkdir $ADIR1
+#echo 250 > $ADIR1/MaxPower
+#mkdir $ADIR1/strings/0x409
 
 mkdir functions/uac2.0
 echo '48000' > functions/uac2.0/c_srate

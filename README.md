@@ -1,4 +1,4 @@
-# Raspberry Pi buildroot system to make a smart sound card
+# Raspberry Pi buildroot system to make a smart USB sound card
 
 # Hardware requirements
 

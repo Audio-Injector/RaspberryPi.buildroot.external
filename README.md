@@ -1,6 +1,6 @@
 # Raspberry Pi buildroot system to make a smart USB sound card
 
-A smart USB sound card is a USB sound card which provides other functionality, such as networking over USB. You can also alter your buildroot configuration to enable WiFi and add various other software, such as DLNA, shairPlay, etc. 
+A smart USB sound card is a USB sound card which provides other functionality, such as networking over USB. You can also alter your buildroot configuration to enable WiFi and add various other software, such as DLNA, shairPlay, etc. A network enabled USB sound card. NOTE: Some of these features require your own DIY efforts, however out of the box it provides the USB sound card and USB network.
 
 # Hardware requirements
 

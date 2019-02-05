@@ -1,6 +1,5 @@
 #! /bin/bash
-# Author : Matt Flax <flatmax@flatmax.org>
-# Date : Nov 2017
+# Setup file to turn the Pi 0w into a smart USB sound card, using the AI stereo sound card or Zero sound card.
 
 if [ $# -lt 1 ]; then
   echo usage :

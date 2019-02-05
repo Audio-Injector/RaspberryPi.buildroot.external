@@ -1,0 +1,26 @@
+#!/bin/sh
+########################################################################
+# Begin alsa
+#
+# Description : Restore and store ALSA settings
+#
+########################################################################
+
+case "$1" in
+   start)
+      echo "Starting ALSA...    Restoring mixer state..."
+      /usr/sbin/alsactl restore
+      ;;
+
+   stop)
+      echo "Stopping ALSA...    Saving mixer state..."
+      /usr/sbin/alsactl store
+      ;;
+
+   *)
+      echo "Usage: $0 {start|stop}"
+      exit 1
+      ;;
+esac
+
+# End alsa

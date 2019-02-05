@@ -26,10 +26,16 @@ Clone the RaspberryPi external buildroot tree :
 git clone git@github.com:Audio-Injector/RaspberryPi.buildroot.external.git
 ```
 
-# To make the system
+# To make the system for the Audio Injector stereo or Zero sound cards
 
 ```
 . RaspberryPi.buildroot.external/setup.sh yourPath/buildroot.raspberrypi
+```
+
+# To make the system for the Audio Injector ultra 2 sound card
+
+```
+. RaspberryPi.buildroot.external/setupUltra.sh yourPath/buildroot.raspberrypi
 ```
 
 # ensure you have your buildroot net downloads directory setup

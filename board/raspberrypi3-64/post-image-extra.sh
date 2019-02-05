@@ -5,6 +5,17 @@ else
   echo 'dtoverlay=audioinjector-wm8731-audio' >> ${BINARIES_DIR}/rpi-firmware/config.txt
 fi
 
+for arg in "$@"
+do
+        case "${arg}" in
+                --audio-injector-ultra2)
+                sed -i '/dtoverlay=audioinjector/d' "${BINARIES_DIR}/rpi-firmware/config.txt"
+                echo 'dtoverlay=audioinjector-ultra' >> ${BINARIES_DIR}/rpi-firmware/config.txt
+                ;;
+        esac
+done
+
+
 if grep -q enable_uart ${BINARIES_DIR}/rpi-firmware/config.txt; then
   echo uart already setup
 else

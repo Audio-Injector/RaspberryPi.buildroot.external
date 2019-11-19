@@ -1,3 +1,4 @@
 menu "Packages"
 source "$BR2_EXTERNAL_PI3_64BIT_PATH/package/gtkiostream/Config.in"
+source "$BR2_EXTERNAL_PI3_64BIT_PATH/package/batterycontroller/Config.in"
 endmenu

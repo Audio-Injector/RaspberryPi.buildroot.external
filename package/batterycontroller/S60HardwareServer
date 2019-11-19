@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Starting the micro battery server"
+        cd /usr/share/BatteryController; NODE_PATH=/usr/lib/node_modules ./HardwareServer.js &
+#        ( while [ true ]; do
+#          cd /usr/share/BatteryController; NODE_PATH=/usr/lib/node_modules ./BatteryControllerEnvoyMeterNet.js
+#        done ) &
+        ;;
+
+    stop)
+        echo "Stopping the micro battery server"
+        killall node ./BatteryControllerEnvoyMeter.js
+        ;;
+
+    *)
+        echo "Usage: $0 start stop"
+        exit 1
+        ;;
+esac
+
+exit $?

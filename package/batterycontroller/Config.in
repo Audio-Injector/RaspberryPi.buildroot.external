@@ -1,0 +1,8 @@
+config BR2_PACKAGE_BATTERYCONTROLLER
+        bool "batterycontroller"
+  select BR2_PACKAGE_NODEJS
+  select BR2_PACKAGE_NODEJS_NPM
+        help
+          Micro-battery controller package
+
+          Site to come

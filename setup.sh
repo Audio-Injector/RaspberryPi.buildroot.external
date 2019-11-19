@@ -28,7 +28,7 @@ else
 
   # common target genimage file
   BR_NEW_DEFCONFIG=$CUSTOM_PATH/configs/$BR_NEW_DEFCONFIG_FILE
-  BR_EXTRA_DEFCONFIG=$CUSTOM_PATH/configs/raspberrypi_ai_defconfig
+  BR_EXTRA_DEFCONFIG="${BR_EXTRA_DEFCONFIG:-$CUSTOM_PATH/configs/raspberrypi_ai_defconfig}"
   BR_POSTIMAGE=$BR_REPO_PATH/output/build/post-image.sh
   BR_GENIMAGE=$BR_REPO_PATH/output/build/genimage-pi.cfg
 

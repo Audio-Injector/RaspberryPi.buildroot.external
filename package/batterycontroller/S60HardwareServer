@@ -5,13 +5,20 @@ case "$1" in
         echo "Starting the micro battery server"
         cd /usr/share/BatteryController; NODE_PATH=/usr/lib/node_modules ./HardwareServer.js &
 #        ( while [ true ]; do
-#          cd /usr/share/BatteryController; NODE_PATH=/usr/lib/node_modules ./BatteryControllerEnvoyMeterNet.js
+#          echo `date` restarting >> /root/BatteryController.txt
+#          NODE_PATH=/usr/lib/node_modules:/usr/share/BatteryController /usr/share/BatteryController/BatteryControllerEnvoyMeterNet.js
 #        done ) &
         ;;
 
     stop)
         echo "Stopping the micro battery server"
-        killall node ./BatteryControllerEnvoyMeter.js
+        # killall node ./BatteryControllerEnvoyMeter.js
+        hsPID = `ps ax | grep HardwareServer.js | grep node | awk '{print $1}'`
+        kill -9 $hsPID
+        bcPID = `ps ax | grep BatteryController.*js | grep node | awk '{print $1}'`
+        if [ ! -z $bcPID ]; then
+          kill -9 $bcPID
+        fi
         ;;
 
     *)

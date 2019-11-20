@@ -5,6 +5,7 @@ case "$1" in
         echo "Starting the micro battery server"
         cd /usr/share/BatteryController; NODE_PATH=/usr/lib/node_modules ./HardwareServer.js &
 #        ( while [ true ]; do
+#         sleep 10
 #          echo `date` restarting >> /root/BatteryController.txt
 #          NODE_PATH=/usr/lib/node_modules:/usr/share/BatteryController /usr/share/BatteryController/BatteryControllerEnvoyMeterNet.js
 #        done ) &

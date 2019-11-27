@@ -14,11 +14,11 @@ case "$1" in
     stop)
         echo "Stopping the micro battery server"
         # killall node ./BatteryControllerEnvoyMeter.js
-        hsPID = `ps ax | grep HardwareServer.js | grep node | awk '{print $1}'`
-        kill -9 $hsPID
-        bcPID = `ps ax | grep BatteryController.*js | grep node | awk '{print $1}'`
-        if [ ! -z $bcPID ]; then
-          kill -9 $bcPID
+        hsPID=`ps ax | grep HardwareServer.js | grep node | awk '{print $1}'`
+        kill -9 ${hsPID}
+        bcPID=`ps ax | grep BatteryController.*js | grep node | awk '{print $1}'`
+        if [ ! -z ${bcPID} ]; then
+          kill -9 ${bcPID}
         fi
         ;;
 

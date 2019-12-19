@@ -1,11 +1,11 @@
-# Raspberry Pi buildroot system to make a smart USB sound card
+# Raspberry Pi buildroot system to make a networked home micro battery
 
-A smart USB sound card is a USB sound card which provides other functionality, such as networking over USB. You can also alter your buildroot configuration to enable WiFi and add various other software, such as DLNA, shairPlay, etc. A network enabled USB sound card. NOTE: Some of these features require your own DIY efforts, however out of the box it provides the USB sound card and USB network.
+A networked home battery allows many networked batteries to augment a house's power.
 
 # Hardware requirements
 
-1. Raspberry Pi 0, probably a zero W
-2. Sound card, probably an Audio Injector sound card ( [Audio Injector original Pi sound card](https://shop.audioinjector.net/detail/Sound_Cards/Original+Pi+Sound+Card) OR [Audio Injector zero sound card](https://shop.audioinjector.net/detail/Sound_Cards/Zero+Form+Factor+Sound+Card))
+1. Raspberry Pi
+2. [BatteryController.electronics](https://github.com/flatmax/BatteryController.electronics) to turn on and off chargers and solar micro inverters
 3. Either a set of 40 pin headers to connect the boards OR an [Audio Injector quick connect clip](https://shop.audioinjector.net/detail/DIY_Electronics/PCB+quick+connect+clip) if you like adaptability and don't want to solder.
 
 # Initial setup
@@ -28,16 +28,15 @@ Clone the RaspberryPi external buildroot tree :
 git clone git@github.com:Audio-Injector/RaspberryPi.buildroot.external.git
 ```
 
+Checkout the home battery branch (by default master is the [Audio Injector sound card](http://www.audioinjector.net) branch)
+```
+cd RaspberryPi.buildroot.external
+git checkout BatteryController
+```
 # To make the system for the Audio Injector stereo or Zero sound cards
 
 ```
-. RaspberryPi.buildroot.external/setup.sh yourPath/buildroot.raspberrypi
-```
-
-# To make the system for the Audio Injector ultra 2 sound card
-
-```
-. RaspberryPi.buildroot.external/setupUltra.sh yourPath/buildroot.raspberrypi
+. RaspberryPi.buildroot.external/setupMicroBattery.sh yourPath/buildroot.raspberrypi
 ```
 
 # ensure you have your buildroot net downloads directory setup
@@ -67,6 +66,8 @@ sudo dd if=output/images/sdcard.img of=/dev/sdg
 # using
 
 The device will show up automatically after boot as a USB audio device.
-ssh root@10.5.5.1 to get into the sound card
+ssh root@10.5.5.1 to get into the sound card - note your host IP will be different to "10.5.5.1" on your LAN, look at your router DNS records to find the buildroot system.
 
-Out of the box it is setup for a stereo 48 kHZ sample rate with 32 bit word sizes. You can alter its default state by editing the overlay/root/startGadget.sh file and then make, or edit the /root/startGedget.sh file on the device.
+Out of the box it is setup to detect whether it is a master or slave from the GPIO settings. Look at the [init.d script](https://github.com/Audio-Injector/RaspberryPi.buildroot.external/blob/BatteryController/package/batterycontroller/S60HardwareServer) to understand how the system is started up.
+
+If you write your own battery controller which uses a different power meter for probing consumption/production then create the required scripts in the [BatteryController software repo](https://github.com/flatmax/BatteryController) and name it in the startup script rather then the BatteryControllerEnvoyMeterNet.js script.

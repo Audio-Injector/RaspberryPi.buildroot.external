@@ -4,8 +4,7 @@
 #
 ################################################################################
 BATTERYCONTROLLER_VERSION = HEAD
-#BATTERYCONTROLLER_SITE = $(call github,flatmax,gtkiostream,$(BATTERYCONTROLLER_VERSION))
-BATTERYCONTROLLER_SITE = /home/flatmax/flatmax/work/Flatmax/repos/BatteryMicroInverter/BatteryController
+BATTERYCONTROLLER_SITE = $(call github,flatmax,BatteryController,$(BATTERYCONTROLLER_VERSION))
 BATTERYCONTROLLER_SITE_METHOD = local
 BATTERYCONTROLLER_LICENSE = free
 BATTERYCONTROLLER_INSTALL_TARGET = YES

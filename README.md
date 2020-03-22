@@ -68,6 +68,8 @@ sudo dd if=output/images/sdcard.img of=/dev/sdg
 The device will show up automatically after boot as a networked battery.
 ssh root@10.5.5.1 to get into the sound card - note your host IP will be different to "10.5.5.1" on your LAN, look at your router DNS records to find the buildroot system.
 
+The master battery holds the logs, which list run level and power stats roughly every 10 seconds.
+
 Out of the box it is setup to detect whether it is a master or slave from the GPIO settings. Look at the [init.d script](https://github.com/Audio-Injector/RaspberryPi.buildroot.external/blob/BatteryController/package/batterycontroller/S60HardwareServer) to understand how the system is started up.
 
 If you write your own battery controller which uses a different power meter for probing consumption/production then create the required scripts in the [BatteryController software repo](https://github.com/flatmax/BatteryController) and name it in the startup script rather then the BatteryControllerEnvoyMeterNet.js script.

@@ -33,7 +33,7 @@ Checkout the home battery branch (by default master is the [Audio Injector sound
 cd RaspberryPi.buildroot.external
 git checkout BatteryController
 ```
-# To make the system for the Audio Injector stereo or Zero sound cards
+# To make the system for the micro battery hardware
 
 ```
 . RaspberryPi.buildroot.external/setupMicroBattery.sh yourPath/buildroot.raspberrypi
@@ -65,7 +65,7 @@ sudo dd if=output/images/sdcard.img of=/dev/sdg
 
 # using
 
-The device will show up automatically after boot as a USB audio device.
+The device will show up automatically after boot as a networked battery.
 ssh root@10.5.5.1 to get into the sound card - note your host IP will be different to "10.5.5.1" on your LAN, look at your router DNS records to find the buildroot system.
 
 Out of the box it is setup to detect whether it is a master or slave from the GPIO settings. Look at the [init.d script](https://github.com/Audio-Injector/RaspberryPi.buildroot.external/blob/BatteryController/package/batterycontroller/S60HardwareServer) to understand how the system is started up.

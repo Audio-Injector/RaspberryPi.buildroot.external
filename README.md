@@ -2,6 +2,8 @@
 
 A networked home battery allows many networked batteries to augment a house's power.
 
+Get a top view of the project here : https://imgur.com/a/hNvbikY
+
 # Hardware requirements
 
 1. Raspberry Pi
